@@ -10,3 +10,5 @@ function App() {
 }
 
 export default App;
+
+// URL for api --> https://randomuser.me/api/
