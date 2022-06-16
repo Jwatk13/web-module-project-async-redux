@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../App.css';
 
 import Form from './Form';
+import AgifyList from './AgifyList';
 
-function App() {
+import { connect } from 'react-redux';
+import { getSuccess } from '../state/actionTypes';
+
+
+
+
+function App(props) {
+
+  useEffect(() => {
+    getSuccess('meelad');
+  }, [])
+
+  const { loading, agifs } = props;
+
   return (
     <div className="App">
       <div>
@@ -11,17 +25,28 @@ function App() {
       </div>
       <h3>Search A Name</h3>
       <Form />
-      <div>
-        {/* //information display...name, age, count */}
+
+      {
+        loading ? <h3>We are loading</h3> : <AgifyList />
+      }
+      <div agifs={agifs}>
+        
       </div>
+        {console.log(agifs)}
       <div>
         <p>Were you right??</p>
       </div>
     </div>
   );
 }
+const mapStateToProps = state => {
+  return {
+    agifs: state.agifs,
+    loading: state.loading
+  }
+}
 
-export default App;
+export default connect(mapStateToProps, { getSuccess })(App);
 
 // URL for api --> https://api.agify.io/?name=meelad
 
